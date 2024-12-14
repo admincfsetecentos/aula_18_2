@@ -1,70 +1,152 @@
-# Getting Started with Create React App
+![alt text](image.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Exercício 1: Contador Simples com useState
 
-## Available Scripts
+### O que foi pedido:
 
-In the project directory, you can run:
+1. Criar um componente chamado `Contador`.
+2. O componente deve exibir:
+   - Um número que começa em 0.
+   - Dois botões: um para incrementar (+1) e outro para decrementar (-1).
+3. Utilizar o hook `useState` para gerenciar o estado do número exibido.
+4. Desafio Extra:
+   - Adicionar uma validação para impedir que o número fique negativo.
 
-### `npm start`
+### O que foi feito:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Componente `Contador`**: 
+   - O componente usa o hook `useState` para manter o estado do contador.
+   - Inicializamos o contador com o valor 0.
+   - Criamos dois botões, um para incrementar o contador e outro para decrementá-lo. A função de decremento inclui uma validação que impede que o contador fique negativo, verificando se o valor é maior que 0 antes de realizar a operação.
+   
+```javascript
+import React, { useState } from "react";
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+function Contador() {
+  const [contador, setContador] = useState(0);
 
-### `npm test`
+  const incrementar = () => setContador(contador + 1);
+  const decrementar = () => setContador(contador > 0 ? contador - 1 : 0); // Impede números negativos
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <div className="contador">
+      <h2>Contador</h2>
+      <p>Contagem: {contador}</p>
+      <button onClick={incrementar}>+1</button>
+      <button onClick={decrementar}>-1</button>
+    </div>
+  );
+}
 
-### `npm run build`
+export default Contador;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Exercício 2: Alterando o Texto de um Botão
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### O que foi pedido:
 
-### `npm run eject`
+1. Criar um componente chamado `BotaoAlternador`.
+2. O componente deve ter:
+   - Um botão que exibe "Ligado" ou "Desligado", dependendo do estado atual.
+3. Ao clicar no botão, o estado deve alternar entre "Ligado" e "Desligado".
+4. Utilizar o hook `useState` para gerenciar o estado do texto.
+5. Desafio Extra:
+   - Adicionar um estilo CSS diferente para cada estado ("Ligado" em verde e "Desligado" em vermelho).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### O que foi feito:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Componente `BotaoAlternador`**:
+   - O componente alterna o texto do botão entre "Ligado" e "Desligado" usando o hook `useState`.
+   - O estado inicial é "Desligado", e ao clicar no botão, o texto alterna entre "Ligado" e "Desligado".
+   - Além disso, a cor do botão muda de acordo com o estado: verde quando "Ligado" e vermelho quando "Desligado".
+   
+```javascript
+import React, { useState } from "react";
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+function BotaoAlternador() {
+  const [estado, setEstado] = useState("Desligado");
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  const alternarEstado = () => {
+    setEstado(estado === "Ligado" ? "Desligado" : "Ligado");
+  };
 
-## Learn More
+  return (
+    <div className="botao-alternador">
+      <h2>Botão Alternador</h2>
+      <button 
+        onClick={alternarEstado} 
+        style={{ backgroundColor: estado === "Ligado" ? 'green' : 'red', color: 'white' }}
+      >
+        {estado}
+      </button>
+    </div>
+  );
+}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export default BotaoAlternador;
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+### Exercício 3: Gerenciando uma Lista de Tarefas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### O que foi pedido:
 
-### Analyzing the Bundle Size
+1. Criar um componente chamado `ListaDeTarefas`.
+2. O componente deve exibir:
+   - Um campo de texto para digitar o nome da tarefa.
+   - Um botão "Adicionar".
+   - Uma lista de tarefas adicionadas.
+3. Utilizar o hook `useState` para gerenciar o estado da lista de tarefas e o valor do campo de texto.
+4. O campo de texto deve atualizar o estado a cada mudança.
+5. Ao clicar no botão "Adicionar", o valor do campo deve ser incluído na lista, e o campo deve ser limpo.
+6. Desafio Extra:
+   - Adicionar a funcionalidade de remover uma tarefa da lista ao clicar nela.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### O que foi feito:
 
-### Making a Progressive Web App
+1. **Componente `ListaDeTarefas`**:
+   - O componente possui um campo de texto para digitar a tarefa e um botão para adicionar à lista.
+   - Usamos o `useState` para controlar tanto o valor do campo de texto quanto a lista de tarefas.
+   - Ao adicionar uma tarefa, o campo de texto é limpo.
+   - A lista de tarefas é exibida e, ao clicar em uma tarefa, ela é removida da lista.
+   
+```javascript
+import React, { useState } from "react";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+function ListaDeTarefas() {
+  const [tarefa, setTarefa] = useState('');
+  const [tarefas, setTarefas] = useState([]);
 
-### Advanced Configuration
+  const adicionarTarefa = () => {
+    if (tarefa) {
+      setTarefas([...tarefas, tarefa]);
+      setTarefa(''); // Limpa o campo de texto
+    }
+  };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  const removerTarefa = (index) => {
+    const novasTarefas = tarefas.filter((_, i) => i !== index);
+    setTarefas(novasTarefas);
+  };
 
-### Deployment
+  return (
+    <div className="lista-tarefas">
+      <h2>Lista de Tarefas</h2>
+      <input 
+        type="text" 
+        value={tarefa} 
+        onChange={(e) => setTarefa(e.target.value)} 
+        placeholder="Digite sua tarefa"
+      />
+      <button onClick={adicionarTarefa}>Adicionar</button>
+      <ul>
+        {tarefas.map((tarefa, index) => (
+          <li key={index} onClick={() => removerTarefa(index)}>
+            {tarefa}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default ListaDeTarefas;
